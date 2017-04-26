@@ -1,0 +1,14 @@
+parserOptions:
+    sourceType: "module"
+    parser: "babel-eslint"
+    
+env:
+    es6: false
+    browser: true
+    node: true
+    
+extends:
+    "eslint:recommended"
+    
+rules:
+    no-console: 0

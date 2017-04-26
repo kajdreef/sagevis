@@ -1,0 +1,46 @@
+{
+  "name": "sagevis",
+  "version": "0.0.1",
+  "description": "Visualization of blinky exeuction trace.",
+  "keywords": [
+      "visualisation",
+      "blinky"
+  ],
+  "author": {
+      "name": "Kaj Dreef", 
+      "url": "http://kajdreef.github.io"
+  },
+  
+  "main": "build/sagevis.js",
+  "jsnext:main": "build/sagevis.mjs",
+  "module": "index",
+  "repository": {
+    "type": "git",
+    "url": "git + https://bitbucket.org/kajdreef/phasevisualization.git"
+  },
+  
+  "scripts": {
+    "clean": "rm -rf build/ && mkdir build/",
+    "build": "rollup -c",
+    "watch": "rollup -c --watch",
+    "lint": "eslint src test",
+    "test": "tape 'test/**/*-test.js'",
+    "publish": "npm run clean && npm lint && npm test && npm run build"
+  },
+
+  "dependencies": {
+    "d3-axis": "1",
+    "d3-drag": "1",
+    "d3-format": "^1.0.2",
+    "d3-scale": "1",
+    "d3-selection": "1",
+    "d3-zoom": "1"
+  },
+  
+  "devDependencies": {
+    "eslint": "3.2.2",
+    "rollup": "0.34.1",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "tape": "^4.6.2"
+  }
+}
