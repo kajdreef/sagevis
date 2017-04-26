@@ -1,2 +1,4 @@
 # trace-vis ignore list
 build/
+node_modules/
+
