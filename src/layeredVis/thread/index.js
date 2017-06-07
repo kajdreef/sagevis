@@ -48,9 +48,9 @@ export default class Thread {
             resizeX = function(d){
                 return (d.x * size)* this.labelTransform.k;
             }.bind(this);
-        
-        
-        
+
+
+
         // Remove the nodes.
         this.hierarchicalVis.selectAll("g").remove();
         this.hierarchicalLabels.selectAll("g").remove();
@@ -71,7 +71,7 @@ export default class Thread {
                                                     .append("svg:g")
                                                     .attr("id", function (d){return d.id + "l";})
                                                     .attr("class", "label");
-        
+
         // Clip path for the labels so they can't appear outside of their box.
         clipPath.append("svg:clipPath")
             .attr("id", function(d) {return "clip"+ d.id} )
@@ -106,15 +106,46 @@ export default class Thread {
                     this.observerList.forEach( function (observer) {
                         observer.notify();
                     })
-                }.bind(this));
-                
+                }.bind(this))
+                .on("mouseover", function(d){
+                    if (d.global_id == undefined) return null;
+
+                    // Select all rect with same clusterid
+                    var rects = document.querySelectorAll('g.pblocks#cluster' + d.global_id);
+
+                    // Highlight the same clusters
+                    rects.forEach(function(rect){
+                        rect.setAttribute("stroke-width", 5);
+                    });
+
+                })
+                .on("mouseout", function(d){
+                    if (d.global_id == undefined) return null;
+
+                    // Select all rect with same clusterid
+                    var rects = document.querySelectorAll('g.pblocks#cluster' + d.global_id);
+
+                    // Remove the highlight the same clusters
+                    rects.forEach(function(rect){
+                        rect.setAttribute("stroke-width", 1);
+                    });
+                });
+
         labelBlock.append("svg:text")
                 .attr("class", "label-text")
                 .attr("clip-path", function(d) {return "url(#clip" + d.id + ")" } )
                 .attr("x", function(d) {return ((d.x + (d.width)/2)* size) * this.labelTransform.k;}.bind(this))
                 .attr("y", visHeight/2 + navBarHeight + 15)
                 .text(function(d) {
-                    return d.label;
+                    let labelString = "";
+
+                    d.label.forEach( function (label) {
+                      labelString += label + ", "
+                    });
+
+
+
+                    return labelString.slice(0, labelString.length - 2);
                 })
                 .style("text-anchor", "middle")
                 .style("font-size", 12)
@@ -131,9 +162,32 @@ export default class Thread {
                     this.observerList.forEach( function (observer) {
                         observer.notify();
                     })
-                }.bind(this));
-                
-        
+                }.bind(this))
+                .on("mouseover", function(d){
+                    if (d.global_id == undefined) return null;
+
+                    // Select all rect with same clusterid
+                    var rects = document.querySelectorAll('g.pblocks#cluster' + d.global_id);
+
+                    // Highlight the same clusters
+                    rects.forEach(function(rect){
+                        rect.setAttribute("stroke-width", 5);
+                    });
+
+                })
+                .on("mouseout", function(d){
+                    if (d.global_id == undefined) return null;
+
+                    // Select all rect with same clusterid
+                    var rects = document.querySelectorAll('g.pblocks#cluster' + d.global_id);
+
+                    // Remove the highlight the same clusters
+                    rects.forEach(function(rect){
+                        rect.setAttribute("stroke-width", 1);
+                    });
+                });
+
+
         // Navigation bar....
         phaseBlock.append("svg:rect")
                 .attr("x", resizeX)
@@ -150,12 +204,35 @@ export default class Thread {
                     this.observerList.forEach(function (observer) {
                         observer.notify();
                     })
-                }.bind(this));
+                }.bind(this))
+                .on("mouseover", function(d){
+                    if (d.global_id == undefined) return null;
+
+                    // Select all rect with same clusterid
+                    var rects = document.querySelectorAll('g.pblocks#cluster' + d.global_id);
+
+                    // Highlight the same clusters
+                    rects.forEach(function(rect){
+                        rect.setAttribute("stroke-width", 5);
+                    });
+
+                })
+                .on("mouseout", function(d){
+                    if (d.global_id == undefined) return null;
+
+                    // Select all rect with same clusterid
+                    var rects = document.querySelectorAll('g.pblocks#cluster' + d.global_id);
+
+                    // Remove the highlight the same clusters
+                    rects.forEach(function(rect){
+                        rect.setAttribute("stroke-width", 1);
+                    });
+                });
 
         // Phase block....
         phaseBlock.append("svg:rect")
             .attr("x", resizeX)
-            .attr("y", navBarHeight) 
+            .attr("y", navBarHeight)
             .attr("width", resizeWidth)
             .attr("height", visHeight)
             .style("stroke", "black")
@@ -174,26 +251,23 @@ export default class Thread {
                 })
             }.bind(this))
             .on("mouseover", function(d){
-                console.log(d)
                 if (d.global_id == undefined) return null;
-                
+
                 // Select all rect with same clusterid
                 var rects = document.querySelectorAll('g.pblocks#cluster' + d.global_id);
-                console.log('g.pblocks#cluster' + d.global_id);
-                console.log(rects);
-                
+
                 // Highlight the same clusters
                 rects.forEach(function(rect){
                     rect.setAttribute("stroke-width", 5);
                 });
-                
+
             })
             .on("mouseout", function(d){
                 if (d.global_id == undefined) return null;
-                
+
                 // Select all rect with same clusterid
                 var rects = document.querySelectorAll('g.pblocks#cluster' + d.global_id);
-                
+
                 // Remove the highlight the same clusters
                 rects.forEach(function(rect){
                     rect.setAttribute("stroke-width", 1);
@@ -212,11 +286,11 @@ export default class Thread {
     getSizeMax(){
         return this.size.max;
     }
-    
+
     setObserver(observer){
         this.observerList.push(observer);
     }
-    
+
     notifyObservers(){
         this.observerList.forEach(function(observer) {
             observer.notify();
