@@ -17,9 +17,9 @@ $ npm run build
 Only *node.js* is a requirement to build the library.
 
 
-## Examples
+## Demo
 
-An example of the tool can be found [here](https://kajdreef.github.io/project/2016/07/07/Phase-detection-and-visualisation.html).
+A small Javac example of the tool can be found [here](https://kajdreef.github.io/slides/#43).
 
 ## References
 
